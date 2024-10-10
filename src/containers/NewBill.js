@@ -1,3 +1,5 @@
+// ./src/containers/NewBill.js
+
 import { ROUTES_PATH } from '../constants/routes.js'
 import Logout from "./Logout.js"
 
@@ -20,6 +22,19 @@ export default class NewBill {
     const file = this.document.querySelector(`input[data-testid="file"]`).files[0]
     const filePath = e.target.value.split(/\\/g)
     const fileName = filePath[filePath.length-1]
+
+
+  // Define allowed file extensions
+  const validExtensions = ['image/jpeg', 'image/jpg', 'image/png'];
+  
+  // Check if the file type is valid
+  if (!validExtensions.includes(file.type)) {
+    alert('Veuillez sélectionner un fichier au format jpg, jpeg ou png.');
+    e.target.value = ""; // Reset the input field if the file is invalid
+    return; // Stop execution if the file is not valid
+  }
+
+
     const formData = new FormData()
     const email = JSON.parse(localStorage.getItem("user")).email
     formData.append('file', file)
@@ -40,7 +55,7 @@ export default class NewBill {
         this.fileName = fileName
       }).catch(error => console.error(error))
   }
-  handleSubmit = e => {
+  handleSubmit = async e => {
     e.preventDefault()
     console.log('e.target.querySelector(`input[data-testid="datepicker"]`).value', e.target.querySelector(`input[data-testid="datepicker"]`).value)
     const email = JSON.parse(localStorage.getItem("user")).email
@@ -57,7 +72,7 @@ export default class NewBill {
       fileName: this.fileName,
       status: 'pending'
     }
-    this.updateBill(bill)
+    await this.updateBill(bill)
     this.onNavigate(ROUTES_PATH['Bills'])
   }
 
