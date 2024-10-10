@@ -1,4 +1,4 @@
-import store from "./Store.js"
+import store from "./store.js"
 import Login, { PREVIOUS_LOCATION } from "../containers/Login.js"
 import Bills  from "../containers/Bills.js"
 import NewBill from "../containers/NewBill.js"
