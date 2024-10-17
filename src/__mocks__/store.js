@@ -1,3 +1,5 @@
+// ./src/__mocks__/store.js
+
 const mockedBills = {
   list() {
     return Promise.resolve([{
