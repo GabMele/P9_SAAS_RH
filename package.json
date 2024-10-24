@@ -5,12 +5,17 @@
   "jest": {
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
-      "./node_modules/@testing-library/jest-dom"
-    ],
-    "verbose": true,
-    "setupFiles": [
+      "./node_modules/@testing-library/jest-dom",
       "./setup-jest.js"
     ],
+    "verbose": true,
+    "testMatch": [
+      "**/__tests__/**/*.[jt]s?(x)"  
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/nightwatch/"
+  ],
     "collectCoverageFrom": [
       "**/*.{js,jsx}",
       "!**/app/**",
@@ -38,7 +43,6 @@
     "jest-html-reporter": "^3.10.2",
     "nightwatch": "^3.0.0",
     "chromedriver": "^129.0.0"
-
-    
   }
 }
+
