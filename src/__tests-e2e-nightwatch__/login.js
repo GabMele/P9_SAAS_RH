@@ -58,9 +58,6 @@ describe('Login Page Test Suite', function() {
           browser.assert.equal(result.value.password, false, 'Password should be required');
         });
     });
-  
-
-
 
     afterEach(function(browser) {
       browser.execute('window.localStorage.clear();');

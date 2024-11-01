@@ -1,6 +1,6 @@
 // nightwatch.conf.js
 module.exports = {
-  src_folders: ['nightwatch/tests'],
+  src_folders: ['src/__tests-e2e-nightwatch__'],
   
   webdriver: {
     start_process: true,
