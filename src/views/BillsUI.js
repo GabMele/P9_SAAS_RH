@@ -21,20 +21,21 @@ const row = (bill) => {
     `)
   }
 
-// ORIGINAL CODE
+
 // const rows = (data) => {
 //   return (data && data.length) ? data.map(bill => row(bill)).join("") : ""
 // }
 
 
 const rows = (data) => {
-  if (!data || !data.length) return ""
-
-  // Sort the bills by date in reverse chronological order (latest to earliest)
-  const sortedBills = data.sort((a, b) => new Date(b.date) - new Date(a.date))
-
-  // Generate the rows from the sorted bills
-  return sortedBills.map(bill => row(bill)).join("")
+  if (data && data.length) {
+    // Sort the data by date before mapping
+    const sortedData = data.sort((a, b) => {
+      return new Date(b.date) - new Date(a.date)
+    })
+    return sortedData.map(bill => row(bill)).join("")
+  }
+  return ""
 }
 
 

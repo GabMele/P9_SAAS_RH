@@ -32,32 +32,46 @@ export default class {
   getBills = () => {
     if (this.store) {
       return this.store
-      .bills()
-      .list()
-      .then(snapshot => {
-        console.log('Fetched snapshot:', snapshot); // Log the snapshot to see what is being returned
-        const bills = snapshot
-          .map(doc => {
-            try {
-              return {
-                ...doc,
-                date: formatDate(doc.date),
-                status: formatStatus(doc.status)
+        .bills()
+        .list()
+        .then(snapshot => {
+          console.log('Fetched snapshot:', snapshot); // Log the snapshot to see what is being returned
+          const bills = snapshot
+            .map(doc => {
+              try {
+                return {
+                  ...doc,
+                  date: doc.date, // Keep the raw date for sorting
+                  formattedDate: formatDate(doc.date), // Format the date for display purposes
+                  status: formatStatus(doc.status)
+                }
+              } catch(e) {
+                console.error('Error formatting date for:', doc, e);
+                return {
+                  ...doc,
+                  date: doc.date, // Keep the raw date in case of formatting errors
+                  formattedDate: doc.date,
+                  status: formatStatus(doc.status)
+                }
               }
-            } catch(e) {
-              // if for some reason, corrupted data was introduced, we manage here failing formatDate function
-              // log the error and return unformatted date in that case
-              //console.log(e,'for',doc)
-              return {
-                ...doc,
-                date: doc.date,
-                status: formatStatus(doc.status)
-              }
-            }
-          })
-          console.log('length', bills.length)
-        return bills
-      })
+            });
+    
+          console.log('Dates before sorting:', bills.map(bill => bill.date));
+  
+          // Sort by the original date in descending order
+          const sortedBills = bills.sort((a, b) => new Date(b.date) - new Date(a.date));
+  
+          // Replace `date` with `formattedDate` for display after sorting
+          sortedBills.forEach(bill => bill.date = bill.formattedDate);
+  
+          return sortedBills;
+        });
     }
-  }
+  };
+  
+  
+  
+  
+  
+  
 }
